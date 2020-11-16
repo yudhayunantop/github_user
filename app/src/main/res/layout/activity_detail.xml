@@ -128,7 +128,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/black"
-        app:srcCompat="@drawable/favoriteWhite" />
+        app:srcCompat="@drawable/favoritewhite" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
