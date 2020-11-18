@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.TABLE_NAME
-import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion._ID
+import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.USERNAME
 import java.sql.SQLException
 
 class UserHelper (context: Context){
@@ -46,14 +46,14 @@ class UserHelper (context: Context){
                 null,
                 null,
                 null,
-                "$_ID ASC")
+                "$USERNAME ASC")
     }
 
     fun queryById(id: String): Cursor {
         return database.query(
                 DATABASE_TABLE,
                 null,
-                "$_ID = ?",
+                "$USERNAME = ?",
                 arrayOf(id),
                 null,
                 null,
@@ -66,6 +66,6 @@ class UserHelper (context: Context){
     }
 
     fun deleteById(id: String): Int {
-        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
+        return database.delete(DATABASE_TABLE, "$USERNAME = '$id'", null)
     }
 }
