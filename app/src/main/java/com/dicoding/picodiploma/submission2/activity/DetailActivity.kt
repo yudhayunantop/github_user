@@ -3,6 +3,7 @@ package com.dicoding.picodiploma.submission2.activity
 import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -79,24 +80,44 @@ class DetailActivity : AppCompatActivity() {
 
         // Favorit
 
-        var statusFavorite = false
-        setStatusFavorite(statusFavorite)
-        floatingActionButton.setOnClickListener{
-            statusFavorite = !statusFavorite
-
-            //kode insert db
-            val values = ContentValues()
-
-            values.put(AVATAR, avatar)
-            values.put(USERNAME, username)
-            userHelper.insert(values)
-
-            setResult(RESULT_ADD, intent)
-            finish()
-
+        var pengecekan = username?.let { userHelper.queryById(it) }
+        Log.d("Kunam", "pusing")
+        if (pengecekan!!.count > 0) {
+            var statusFavorite = true
             setStatusFavorite(statusFavorite)
+            floatingActionButton.setOnClickListener{
+
+                //kode delete db
+                username?.let { it -> userHelper.deleteById(it) }
+
+                setResult(RESULT_DELETE, intent)
+
+                statusFavorite = false
+                setStatusFavorite(statusFavorite)}
+
+        }
+        else{
+            var statusFavorite = false
+            setStatusFavorite(statusFavorite)
+            floatingActionButton.setOnClickListener{
+                statusFavorite=!statusFavorite
+
+                //kode insert db
+                val values = ContentValues()
+
+                values.put(AVATAR, avatar)
+                values.put(USERNAME, username)
+                userHelper.insert(values)
+
+                setResult(RESULT_ADD, intent)
+
+                statusFavorite = true
+                setStatusFavorite(statusFavorite)}
+
         }
 
+
+        //userHelper.close()
     }
 
     private fun showLoading(state: Boolean) {
