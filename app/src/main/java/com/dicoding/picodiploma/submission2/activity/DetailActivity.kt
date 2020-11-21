@@ -32,11 +32,8 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_USER = "extra_user"
         const val EXTRA_AVATAR = "extra_avatar"
 
-        const val REQUEST_ADD = 100
         const val RESULT_ADD = 101
         const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
