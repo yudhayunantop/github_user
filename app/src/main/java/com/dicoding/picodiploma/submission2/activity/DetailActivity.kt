@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.submission2.activity
 
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,10 @@ import com.dicoding.picodiploma.submission2.MainViewModel
 import com.dicoding.picodiploma.submission2.R
 import com.dicoding.picodiploma.submission2.adapter.SectionsPagerAdapter
 import com.dicoding.picodiploma.submission2.User
+import com.dicoding.picodiploma.submission2.db.UserContract
+import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.AVATAR
+import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.USERNAME
+import com.dicoding.picodiploma.submission2.db.UserHelper
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -19,17 +24,30 @@ import kotlinx.android.synthetic.main.item_row_user.view.*
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var userHelper: UserHelper
+
 
     companion object{
         const val EXTRA_USER = "extra_user"
+        const val EXTRA_AVATAR = "extra_avatar"
+
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
+
         val dataUser = intent.getParcelableExtra<User>(EXTRA_USER) as User
         val username = dataUser.username
+        val avatar = dataUser.avatar
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
@@ -58,14 +76,29 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
         supportActionBar?.title = dataUser.username
 
+
+        // Favorit
+
         var statusFavorite = false
         setStatusFavorite(statusFavorite)
         floatingActionButton.setOnClickListener{
             statusFavorite = !statusFavorite
+
             //kode insert db
+            val values = ContentValues()
+
+            values.put(AVATAR, avatar)
+            values.put(USERNAME, username)
+            userHelper.insert(values)
+
+            setResult(RESULT_ADD, intent)
+            finish()
+
             setStatusFavorite(statusFavorite)
         }
+
     }
+
     private fun showLoading(state: Boolean) {
         if (state) {
             progressBar2.visibility = View.VISIBLE
@@ -74,15 +107,14 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setStatusFavorite(statusFavorite:Boolean) {
         if (statusFavorite){
             //ganti src icon ke favorite
+            floatingActionButton.setImageResource(R.drawable.favoriteblack)
         }
-
-
         else{
             //ganti src icon ke not favorite
+            floatingActionButton.setImageResource(R.drawable.favoritewhite)
         }
     }
 

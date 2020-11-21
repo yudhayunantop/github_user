@@ -9,21 +9,19 @@ import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Comp
 import java.sql.SQLException
 
 class UserHelper (context: Context){
+
+    private var dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
+    private lateinit var database: SQLiteDatabase
+
+
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
-        private lateinit var dataBaseHelper: DatabaseHelper
-
         private var INSTANCE: UserHelper? = null
+
         fun getInstance(context: Context): UserHelper =
                 INSTANCE ?: synchronized(this) {
                     INSTANCE ?: UserHelper(context)
                 }
-
-        private lateinit var database: SQLiteDatabase
-    }
-
-    init {
-        dataBaseHelper = DatabaseHelper(context)
     }
 
     @Throws(SQLException::class)

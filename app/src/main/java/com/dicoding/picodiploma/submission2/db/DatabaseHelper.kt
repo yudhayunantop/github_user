@@ -13,7 +13,7 @@ internal class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DAT
         private const val DATABASE_VERSION = 1
 
         private val SQL_CREATE_TABLE_FAV = "CREATE TABLE $TABLE_NAME" +
-                " ${UserContract.FavoriteColumns.USERNAME} TEXT PRIMARY KEY," +
+                " (${UserContract.FavoriteColumns.USERNAME} TEXT PRIMARY KEY," +
                 " ${UserContract.FavoriteColumns.AVATAR} TEXT NOT NULL)"
     }
 

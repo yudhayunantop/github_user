@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
             override fun onItemClicked(data: User) {
                 val moveIntent = Intent(activity, DetailActivity::class.java)
                 moveIntent.putExtra(DetailActivity.EXTRA_USER, data)
+                moveIntent.putExtra(DetailActivity.EXTRA_AVATAR, data)
                 startActivity(moveIntent)
             }
         })
