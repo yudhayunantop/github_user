@@ -79,45 +79,43 @@ class DetailActivity : AppCompatActivity() {
 
 
         // Favorit
+        // add favorit jalan saat baru masuk aja, ga bisa digradak add lanjut delete
 
         var pengecekan = username?.let { userHelper.queryById(it) }
-        Log.d("Kunam", "pusing")
-        if (pengecekan!!.count > 0) {
-            var statusFavorite = true
-            setStatusFavorite(statusFavorite)
-            floatingActionButton.setOnClickListener{
+            if (pengecekan!!.count > 0) {
+                var statusFavorite = true
+                setStatusFavorite(statusFavorite)
+                floatingActionButton.setOnClickListener {
 
-                //kode delete db
-                username?.let { it -> userHelper.deleteById(it) }
+                    //kode delete db
+                    username?.let { it -> userHelper.deleteById(it) }
 
-                setResult(RESULT_DELETE, intent)
+                    setResult(RESULT_DELETE, intent)
 
-                statusFavorite = false
-                setStatusFavorite(statusFavorite)}
+                    statusFavorite = false
+                    setStatusFavorite(statusFavorite)
+                }
+            }
+            else {
+                var statusFavorite = false
+                setStatusFavorite(statusFavorite)
+                floatingActionButton.setOnClickListener {
+                    statusFavorite = !statusFavorite
 
-        }
-        else{
-            var statusFavorite = false
-            setStatusFavorite(statusFavorite)
-            floatingActionButton.setOnClickListener{
-                statusFavorite=!statusFavorite
+                    //kode insert db
+                    val values = ContentValues()
 
-                //kode insert db
-                val values = ContentValues()
+                    values.put(AVATAR, avatar)
+                    values.put(USERNAME, username)
+                    userHelper.insert(values)
 
-                values.put(AVATAR, avatar)
-                values.put(USERNAME, username)
-                userHelper.insert(values)
+                    setResult(RESULT_ADD, intent)
 
-                setResult(RESULT_ADD, intent)
+                    statusFavorite = true
+                    setStatusFavorite(statusFavorite)
+                }
+            }
 
-                statusFavorite = true
-                setStatusFavorite(statusFavorite)}
-
-        }
-
-
-        //userHelper.close()
     }
 
     private fun showLoading(state: Boolean) {
