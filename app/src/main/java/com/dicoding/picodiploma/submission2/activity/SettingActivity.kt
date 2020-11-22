@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.submission2.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dicoding.picodiploma.submission2.MyPreferenceFragment
 import com.dicoding.picodiploma.submission2.R
 
 class SettingActivity : AppCompatActivity() {
@@ -10,6 +11,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         supportActionBar?.title = "Settings"
+        supportFragmentManager.beginTransaction().add(R.id.setting_holder, MyPreferenceFragment()).commit()
 
     }
 }

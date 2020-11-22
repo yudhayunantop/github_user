@@ -26,6 +26,7 @@
     <string name="data_following">Data Following</string>
     <string name="content_tab_text" />
     <string name="insert_username">Masukkan Username...</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="key_aktifasi">aktifasi</string>
+    <string name="is_aktifasi">Alarm pada pukul 09:00</string>
 </resources>

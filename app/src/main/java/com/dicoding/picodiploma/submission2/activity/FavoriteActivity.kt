@@ -58,4 +58,9 @@ class FavoriteActivity : AppCompatActivity() {
         return userList
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        userHelper.close()
+    }
+
 }

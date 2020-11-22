@@ -91,6 +91,8 @@ class DetailActivity : AppCompatActivity() {
 
                     statusFavorite = false
                     setStatusFavorite(statusFavorite)
+
+                    finish()
                 }
             }
             else {
@@ -110,6 +112,8 @@ class DetailActivity : AppCompatActivity() {
 
                     statusFavorite = true
                     setStatusFavorite(statusFavorite)
+
+                    finish()
                 }
             }
 
@@ -132,6 +136,11 @@ class DetailActivity : AppCompatActivity() {
             //ganti src icon ke not favorite
             floatingActionButton.setImageResource(R.drawable.favoritewhite)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        userHelper.close()
     }
 
 
