@@ -1,2 +1,3 @@
+include ':myconsumerapp'
 include ':app'
 rootProject.name = "submission2_2"

@@ -1,6 +1,5 @@
-package com.dicoding.picodiploma.submission2.activity
+package com.dicoding.picodiploma.myconsumerapp
 
-import android.content.Intent
 import android.database.ContentObserver
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
@@ -8,19 +7,17 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.picodiploma.submission2.R
-import com.dicoding.picodiploma.submission2.User
-import com.dicoding.picodiploma.submission2.adapter.ListUserAdapter
-import com.dicoding.picodiploma.submission2.db.UserContract
-import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.CONTENT_URI
-import kotlinx.android.synthetic.main.activity_favorite.*
+import com.dicoding.picodiploma.myconsumerapp.adapter.ListUserAdapter
+import com.dicoding.picodiploma.myconsumerapp.db.UserContract
+import com.dicoding.picodiploma.myconsumerapp.db.UserContract.FavoriteColumns.Companion.CONTENT_URI
+import kotlinx.android.synthetic.main.activity_main.*
 
 private lateinit var adapter: ListUserAdapter
 
-class FavoriteActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favorite)
+        setContentView(R.layout.activity_main)
         rv_fav.setHasFixedSize(true)
 
         supportActionBar?.title = "Favorite"
@@ -45,14 +42,6 @@ class FavoriteActivity : AppCompatActivity() {
         var data = cursor?.let { mapCursortoArrayList(it) }
         adapter.setData(data!!)
 
-        adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: User) {
-                val moveIntent = Intent(this@FavoriteActivity, DetailActivity::class.java)
-                moveIntent.putExtra(DetailActivity.EXTRA_USER, data)
-                moveIntent.putExtra(DetailActivity.EXTRA_AVATAR, data)
-                startActivity(moveIntent)
-            }
-        })
     }
 
     fun mapCursortoArrayList(favoriteUser: Cursor): ArrayList<User>{
