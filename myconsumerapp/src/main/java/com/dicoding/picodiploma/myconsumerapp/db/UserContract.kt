@@ -5,7 +5,7 @@ import android.provider.BaseColumns
 
 object UserContract {
 
-    const val AUTHORITY = "com.dicoding.picodiploma.myconsumerapp"
+    const val AUTHORITY = "com.dicoding.picodiploma.submission2"
     const val SCHEME = "content"
 
     class FavoriteColumns : BaseColumns {
@@ -15,9 +15,9 @@ object UserContract {
             const val AVATAR = "avatar"
 
             val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
-                .authority(AUTHORITY)
-                .appendPath(TABLE_NAME)
-                .build()
+                    .authority(AUTHORITY)
+                    .appendPath(TABLE_NAME)
+                    .build()
         }
 
     }

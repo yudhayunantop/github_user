@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         rv_fav.layoutManager = LinearLayoutManager(this)
         rv_fav.adapter = adapter
 
-        supportActionBar?.title = "Favorite"
+        supportActionBar?.title = "Consumer Favorite"
 
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
