@@ -5,7 +5,7 @@ import android.provider.BaseColumns
 
 object UserContract {
 
-    const val AUTHORITY = "com.dicoding.picodiploma.submission2"
+    const val AUTHORITY = "com.dicoding.picodiploma.myconsumerapp"
     const val SCHEME = "content"
 
     class FavoriteColumns : BaseColumns {
