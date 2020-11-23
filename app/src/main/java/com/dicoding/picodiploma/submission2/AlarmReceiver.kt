@@ -1,18 +1,9 @@
 package com.dicoding.picodiploma.submission2
 
-import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.media.RingtoneManager
-import android.os.Build
-import android.widget.Toast
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.dicoding.picodiploma.submission2.AlarmHelper.ALARM_MESSAGE
 import com.dicoding.picodiploma.submission2.AlarmHelper.ALARM_TITTLE
 import com.dicoding.picodiploma.submission2.activity.MainActivity
@@ -20,7 +11,6 @@ import com.dicoding.picodiploma.submission2.activity.MainActivity
 class AlarmReceiver : BroadcastReceiver() {
 
     companion object {
-        // Siapkan 2 id untuk 2 macam alarm, onetime dan repeating
         private const val ALARM_ID_REPEATING = 101
 
     }
