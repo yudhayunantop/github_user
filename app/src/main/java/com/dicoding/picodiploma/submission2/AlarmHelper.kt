@@ -83,6 +83,7 @@ object AlarmHelper {
         }
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
+        // setInexactRepeating memang agak pending beberpa detik
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 time.timeInMillis,
