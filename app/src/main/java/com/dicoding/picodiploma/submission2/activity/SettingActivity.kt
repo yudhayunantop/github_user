@@ -2,7 +2,7 @@ package com.dicoding.picodiploma.submission2.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.dicoding.picodiploma.submission2.MyPreferenceFragment
+import com.dicoding.picodiploma.submission2.fragment.MyPreferenceFragment
 import com.dicoding.picodiploma.submission2.R
 
 class SettingActivity : AppCompatActivity() {

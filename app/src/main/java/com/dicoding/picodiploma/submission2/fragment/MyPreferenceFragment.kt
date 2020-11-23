@@ -1,9 +1,11 @@
-package com.dicoding.picodiploma.submission2
+package com.dicoding.picodiploma.submission2.fragment
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.dicoding.picodiploma.submission2.alarm.AlarmHelper
+import com.dicoding.picodiploma.submission2.R
 import java.util.*
 
 class MyPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {

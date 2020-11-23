@@ -1,11 +1,11 @@
-package com.dicoding.picodiploma.submission2
+package com.dicoding.picodiploma.submission2.alarm
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.dicoding.picodiploma.submission2.AlarmHelper.ALARM_MESSAGE
-import com.dicoding.picodiploma.submission2.AlarmHelper.ALARM_TITTLE
+import com.dicoding.picodiploma.submission2.alarm.AlarmHelper.ALARM_MESSAGE
+import com.dicoding.picodiploma.submission2.alarm.AlarmHelper.ALARM_TITTLE
 import com.dicoding.picodiploma.submission2.activity.MainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -26,11 +26,11 @@ class AlarmReceiver : BroadcastReceiver() {
 
         context?.let {
             AlarmHelper.showNotification(
-                    it,
-                    title ?: "Tittle",
-                    message ?: "Message",
-                    ALARM_ID_REPEATING,
-                    pendingIntent
+                it,
+                title ?: "Tittle",
+                message ?: "Message",
+                ALARM_ID_REPEATING,
+                pendingIntent
             )
         }
     }

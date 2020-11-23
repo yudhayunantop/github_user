@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.submission2
+package com.dicoding.picodiploma.submission2.alarm
 
 import android.app.AlarmManager
 import android.app.NotificationChannel
@@ -11,6 +11,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.dicoding.picodiploma.submission2.R
 import java.util.*
 
 object AlarmHelper {
@@ -37,7 +38,7 @@ object AlarmHelper {
             setLargeIcon(
                     BitmapFactory.decodeResource(
                             context.resources,
-                            R.drawable.alarm
+                        R.drawable.alarm
                     )
             )
             setContentTitle(title)
