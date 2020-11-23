@@ -13,5 +13,6 @@ class SettingActivity : AppCompatActivity() {
         supportActionBar?.title = "Settings"
         supportFragmentManager.beginTransaction().add(R.id.setting_holder, MyPreferenceFragment()).commit()
 
+
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        android:id="@+id/switchOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:defaultValue="false"
+        android:icon="@drawable/alarm"
+        android:key="@string/key_aktifasi"
+        android:title="@string/is_aktifasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</PreferenceScreen>
