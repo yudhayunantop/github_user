@@ -37,14 +37,13 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSha
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
             if (key == AKTIFASI) {
                 // Create reminder alarm
                 context?.let {
                     AlarmHelper.createAlarm(
                         it,
                         getString(R.string.app_name),
-                        "Let's find popular user on Github!",
+                        "Ayo temukan pengguna lain pada Github!",
                         ALARM_ID_REPEATING,
                         Calendar.getInstance().apply {
                             set(Calendar.HOUR_OF_DAY, 9)
@@ -53,6 +52,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSha
                         }
                     )
                 }
+
 
             } else {
                 // Delete reminder alarm

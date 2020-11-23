@@ -83,8 +83,6 @@ object AlarmHelper {
         }
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
-        // Create alarm repeating (Alarm will be a little delay, because use InexactRepeating,
-        // but this is very effective according to "developer.android.com" recommendations )
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 time.timeInMillis,
@@ -101,7 +99,6 @@ object AlarmHelper {
             it.cancel()
         }
 
-        // Cancel alarm
         alarmManager.cancel(pendingIntent)
     }
 
