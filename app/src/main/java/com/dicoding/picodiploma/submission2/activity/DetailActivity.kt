@@ -1,9 +1,12 @@
 package com.dicoding.picodiploma.submission2.activity
 
 import android.content.ContentValues
+import android.database.ContentObserver
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.HandlerThread
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,17 +18,15 @@ import com.dicoding.picodiploma.submission2.adapter.SectionsPagerAdapter
 import com.dicoding.picodiploma.submission2.User
 import com.dicoding.picodiploma.submission2.db.UserContract
 import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.AVATAR
+import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.USERNAME
 import com.dicoding.picodiploma.submission2.db.UserHelper
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_row_user.*
-import kotlinx.android.synthetic.main.item_row_user.view.*
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var userHelper: UserHelper
+    //private lateinit var userHelper: UserHelper
+    private lateinit var uriWithId: Uri
 
 
     companion object{
@@ -40,8 +41,17 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        userHelper = UserHelper.getInstance(applicationContext)
-        userHelper.open()
+//        userHelper = UserHelper.getInstance(applicationContext)
+//        userHelper.open()
+
+        val handlerThread = HandlerThread("DataObserver")
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+        val myObserver = object : ContentObserver(handler){
+
+        }
+        contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
+
 
         val dataUser = intent.getParcelableExtra<User>(EXTRA_USER) as User
         val username = dataUser.username
@@ -76,16 +86,17 @@ class DetailActivity : AppCompatActivity() {
 
 
         // Favorit
-        // add favorit jalan saat baru masuk aja, ga bisa digradak add lanjut delete
+        //var pengecekan = username?.let { userHelper.queryById(it) }
 
-        var pengecekan = username?.let { userHelper.queryById(it) }
-            if (pengecekan!!.count > 0) {
+        var pengecekan = username?.let { contentResolver.query(CONTENT_URI, null, null, null, null) }
+
+        if (pengecekan!!.position > 0) {
                 var statusFavorite = true
                 setStatusFavorite(statusFavorite)
                 floatingActionButton.setOnClickListener {
 
                     //kode delete db
-                    username?.let { it -> userHelper.deleteById(it) }
+                    username?.let { it -> contentResolver.delete(CONTENT_URI, null, null)}
 
                     setResult(RESULT_DELETE, intent)
 
@@ -106,7 +117,7 @@ class DetailActivity : AppCompatActivity() {
 
                     values.put(AVATAR, avatar)
                     values.put(USERNAME, username)
-                    userHelper.insert(values)
+                    contentResolver.insert(CONTENT_URI,values)
 
                     setResult(RESULT_ADD, intent)
 
@@ -136,11 +147,6 @@ class DetailActivity : AppCompatActivity() {
             //ganti src icon ke not favorite
             floatingActionButton.setImageResource(R.drawable.favoritewhite)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        userHelper.close()
     }
 
 

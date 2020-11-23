@@ -1,19 +1,22 @@
 package com.dicoding.picodiploma.submission2.activity
 
 import android.content.Intent
+import android.database.ContentObserver
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.submission2.R
 import com.dicoding.picodiploma.submission2.User
 import com.dicoding.picodiploma.submission2.adapter.ListUserAdapter
 import com.dicoding.picodiploma.submission2.db.UserContract
+import com.dicoding.picodiploma.submission2.db.UserContract.FavoriteColumns.Companion.CONTENT_URI
 import com.dicoding.picodiploma.submission2.db.UserHelper
 import kotlinx.android.synthetic.main.activity_favorite.*
 
 private lateinit var adapter: ListUserAdapter
-private lateinit var userHelper: UserHelper
 
 class FavoriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +26,6 @@ class FavoriteActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Settings"
 
-        userHelper = UserHelper.getInstance(applicationContext)
-        userHelper.open()
-
         adapter = ListUserAdapter()
         adapter.notifyDataSetChanged()
 
@@ -34,9 +34,17 @@ class FavoriteActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Favorite"
 
-        var cursor = userHelper.queryAll()
-        var data = mapCursortoArrayList(cursor)
-        adapter.setData(data)
+        val handlerThread = HandlerThread("DataObserver")
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+        val myObserver = object : ContentObserver(handler){
+
+        }
+        contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
+
+        val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
+        var data = cursor?.let { mapCursortoArrayList(it) }
+        adapter.setData(data!!)
 
         adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback{
             override fun onItemClicked(data: User) {
@@ -56,11 +64,6 @@ class FavoriteActivity : AppCompatActivity() {
             userList.add(User(avatar, username))
         }
         return userList
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        userHelper.close()
     }
 
 }

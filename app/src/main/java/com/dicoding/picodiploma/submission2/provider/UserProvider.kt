@@ -18,12 +18,13 @@ class UserProvider : ContentProvider() {
         private const val USER_ID = 2
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
         private lateinit var userHelper: UserHelper
+
         init {
-            // content://com.dicoding.picodiploma.submission2/user
+            // content://com.dicoding.picodiploma.submission2/favorite_user
             sUriMatcher.addURI(AUTHORITY, TABLE_NAME, USER)
-            // content://com.dicoding.picodiploma.mynotesapp/user/id
+            // content://com.dicoding.picodiploma.submission2/favorite_user/username
             sUriMatcher.addURI(AUTHORITY,
-                "$TABLE_NAME/#",
+                "$TABLE_NAME/*",
                 USER_ID)
         }
     }
@@ -38,7 +39,7 @@ class UserProvider : ContentProvider() {
         val cursor: Cursor?
         when (sUriMatcher.match(uri)) {
             USER -> cursor = userHelper.queryAll()
-            USER_ID -> cursor = userHelper.queryById(uri.lastPathSegment.toString())
+            USER_ID -> cursor = uri.lastPathSegment?.let { userHelper.queryById(it) }
             else -> cursor = null
         }
         return cursor    }
