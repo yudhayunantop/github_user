@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
-    //private lateinit var userHelper: UserHelper
     private lateinit var uriWithId: Uri
 
 
@@ -40,9 +39,6 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
-//        userHelper = UserHelper.getInstance(applicationContext)
-//        userHelper.open()
 
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
@@ -84,19 +80,20 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
         supportActionBar?.title = dataUser.username
 
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + username)
+
+
 
         // Favorit
-        //var pengecekan = username?.let { userHelper.queryById(it) }
+        var pengecekan = username?.let { contentResolver.query(uriWithId, null, null, null, null) }
 
-        var pengecekan = username?.let { contentResolver.query(CONTENT_URI, null, null, null, null) }
-
-        if (pengecekan!!.position > 0) {
+        if (pengecekan!!.count > 0) {
                 var statusFavorite = true
                 setStatusFavorite(statusFavorite)
                 floatingActionButton.setOnClickListener {
 
                     //kode delete db
-                    username?.let { it -> contentResolver.delete(CONTENT_URI, null, null)}
+                    username?.let { it -> contentResolver.delete(uriWithId, null, null)}
 
                     setResult(RESULT_DELETE, intent)
 
@@ -106,7 +103,7 @@ class DetailActivity : AppCompatActivity() {
                     finish()
                 }
             }
-            else {
+            else{
                 var statusFavorite = false
                 setStatusFavorite(statusFavorite)
                 floatingActionButton.setOnClickListener {
